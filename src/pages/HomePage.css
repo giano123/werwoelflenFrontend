@@ -1,0 +1,151 @@
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.home-hero {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  animation: slideInDown 0.6s ease-out;
+}
+
+.home-title {
+  font-size: 4rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 30px rgba(82, 148, 226, 0.6);
+  background: linear-gradient(135deg, var(--color-moon-glow), var(--color-village-light), var(--color-seer-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 2px;
+}
+
+.home-subtitle {
+  font-size: 1.3rem;
+  color: rgba(232, 238, 245, 0.7);
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+.home-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.home-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 768px) {
+  .home-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .home-title {
+    font-size: 2.5rem;
+  }
+}
+
+.action-card {
+  background: linear-gradient(135deg, rgba(44, 62, 102, 0.6), rgba(26, 31, 58, 0.8));
+  border: 2px solid rgba(82, 148, 226, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(82, 148, 226, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.action-card:hover::before {
+  left: 100%;
+}
+
+.action-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--color-village-blue);
+  box-shadow: 0 12px 48px rgba(82, 148, 226, 0.4);
+}
+
+.action-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.action-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-moon-glow);
+}
+
+.action-card-desc {
+  font-size: 0.95rem;
+  color: rgba(232, 238, 245, 0.7);
+  margin-bottom: 1.5rem;
+}
+
+.lobby-form {
+  background: rgba(44, 62, 102, 0.4);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 2px solid rgba(82, 148, 226, 0.2);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-header h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-moon-glow);
+  margin-bottom: 0.5rem;
+}
+
+.form-description {
+  color: rgba(232, 238, 245, 0.6);
+  font-size: 0.9rem;
+}
+
+.user-info-card {
+  background: linear-gradient(135deg, rgba(82, 148, 226, 0.2), rgba(116, 185, 255, 0.2));
+  border: 2px solid var(--color-village-blue);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.user-welcome {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-village-blue);
+  margin-bottom: 0.5rem;
+}
+
+.user-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-moon-glow);
+}
+

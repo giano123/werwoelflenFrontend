@@ -1,0 +1,172 @@
+.game-info {
+  position: sticky;
+  top: 1rem;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.game-info .card {
+  background: linear-gradient(135deg, rgba(44, 62, 102, 0.6), rgba(26, 31, 58, 0.8));
+  border: 2px solid rgba(82, 148, 226, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.game-info-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(232, 238, 245, 0.1);
+  margin-bottom: 1rem;
+}
+
+.day-counter {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  text-shadow: 0 0 15px rgba(254, 202, 87, 0.5);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}
+
+.status-alive {
+  background: linear-gradient(135deg, rgba(0, 210, 160, 0.3), rgba(0, 168, 143, 0.3));
+  border: 2px solid var(--color-witch-green);
+  color: var(--color-witch-green);
+}
+
+.status-dead {
+  background: linear-gradient(135deg, rgba(74, 85, 104, 0.3), rgba(45, 55, 72, 0.3));
+  border: 2px solid var(--color-dead-gray);
+  color: var(--color-dead-gray);
+  animation: none;
+}
+
+.info-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(10, 14, 39, 0.3);
+  border-radius: 12px;
+  border-left: 4px solid var(--color-village-blue);
+  transition: var(--transition-smooth);
+}
+
+.info-section:hover {
+  background: rgba(10, 14, 39, 0.5);
+  transform: translateX(5px);
+}
+
+.info-label {
+  font-size: 0.85rem;
+  color: rgba(232, 238, 245, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.info-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-moon-glow);
+}
+
+.phase-display {
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  animation: glow 2s infinite;
+}
+
+.phase-display.night {
+  background: linear-gradient(135deg, rgba(26, 31, 58, 0.8), rgba(44, 62, 102, 0.8));
+  border: 2px solid var(--color-seer-purple);
+  color: var(--color-seer-purple);
+  box-shadow: 0 0 20px rgba(162, 155, 254, 0.3);
+}
+
+.phase-display.day {
+  background: linear-gradient(135deg, rgba(255, 216, 155, 0.3), rgba(255, 159, 67, 0.3));
+  border: 2px solid var(--color-hunter-orange);
+  color: var(--color-hunter-orange);
+  box-shadow: 0 0 20px rgba(255, 159, 67, 0.3);
+}
+
+.phase-description {
+  font-size: 0.9rem;
+  color: rgba(232, 238, 245, 0.7);
+  text-align: center;
+  font-style: italic;
+  padding: 0.5rem;
+}
+
+.potion-status {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.potion-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: rgba(10, 14, 39, 0.4);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  transition: var(--transition-smooth);
+}
+
+.potion-item.available {
+  border-color: var(--color-witch-green);
+  box-shadow: 0 0 10px rgba(0, 210, 160, 0.2);
+}
+
+.potion-item.used {
+  opacity: 0.5;
+  filter: grayscale(100%);
+}
+
+.potion-icon {
+  font-size: 1.5rem;
+}
+
+.potion-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.inspection-result {
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(162, 155, 254, 0.2), rgba(139, 126, 232, 0.2));
+  border: 2px solid var(--color-seer-purple);
+  border-radius: 12px;
+  margin-top: 1rem;
+  animation: slideInDown 0.5s ease-out;
+}
+
+.inspection-result h6 {
+  color: var(--color-seer-purple);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.inspection-result .info-value {
+  font-size: 1.2rem;
+  color: var(--color-moon-glow);
+}
+
