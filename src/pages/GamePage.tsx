@@ -4,6 +4,7 @@ import { Alert, Button } from 'react-bootstrap';
 import { gameAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import type { GameState, ActionType, PlayerInfo, WolfVictim } from '../types';
+import ChatPanel from '../components/ChatPanel';
 import './GamePage.css';
 
 const GamePage = () => {
@@ -160,11 +161,11 @@ const GamePage = () => {
 
   const selectedPlayerData = availableTargets.find(p => p.playerId === selectedPlayer);
   const canAct = gameState.isAlive && (gameState.availableActions?.length ?? 0) > 0;
-  const isVotingPhase = gameState.currentPhase === 'NIGHT_WOLVES' || gameState.currentPhase === 'DAY_VOTING';
-  const isSeerPhase = gameState.currentPhase === 'NIGHT_SEER' && gameState.ownRole === 'SEER';
-  const isWitchPhase = gameState.currentPhase === 'NIGHT_WITCH' && gameState.ownRole === 'WITCH';
-  const isDiscussionPhase = gameState.currentPhase === 'DAY_DISCUSSION';
-  const hasHunterShot = gameState.ownStateFlags?.hunterShotAvailable;
+  const isVotingPhase = ((gameState.currentPhase === 'NIGHT_WOLVES' && gameState.ownRole === 'WEREWOLF' && gameState.isAlive) || (gameState.currentPhase === 'DAY_VOTING' && gameState.isAlive));
+  const isSeerPhase = gameState.currentPhase === 'NIGHT_SEER' && gameState.ownRole === 'SEER' && gameState.isAlive;
+  const isWitchPhase = gameState.currentPhase === 'NIGHT_WITCH' && gameState.ownRole === 'WITCH' && gameState.isAlive;
+  const isDiscussionPhase = gameState.currentPhase === 'DAY_DISCUSSION' && gameState.isAlive;
+  const hasHunterShot = !gameState.isAlive && gameState.ownStateFlags?.hunterShotAvailable && gameState.ownRole === 'HUNTER';
 
   if (gameState.status === 'FINISHED') {
     return (
@@ -238,7 +239,7 @@ const GamePage = () => {
             </div>
             <div className="panel-body">
               <div style={{ marginBottom: '1rem' }}>
-                <div className="status-instruction-text">Aktuelle Phase:</div>
+                <div className="status-instruction-text">Rolle: {gameState.ownRole}Aktuelle Phase:</div>
                 <div className="phase-description-text">
                   {gameState.phaseDescription}
                 </div>
@@ -612,6 +613,10 @@ const GamePage = () => {
                   ))}
               </div>
             </div>
+          </div>
+
+          <div className="game-panel chat-panel-wrapper">
+            <ChatPanel gameId={gameState.gameId} currentPhase={gameState.currentPhase} isAlive={gameState.isAlive} />
           </div>
         </div>
       </div>

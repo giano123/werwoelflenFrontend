@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, FormEvent } from 'react';
-import { Card, Form, Button, ListGroup } from 'react-bootstrap';
+import { Card, Form } from 'react-bootstrap';
 import { gameAPI } from '../services/api';
 import type { ChatMessage, GamePhase } from '../types';
 import './ChatPanel.css';
@@ -7,13 +7,16 @@ import './ChatPanel.css';
 interface ChatPanelProps {
   gameId: number;
   currentPhase: GamePhase;
+  isAlive: boolean;
 }
 
-const ChatPanel = ({ gameId, currentPhase }: ChatPanelProps) => {
+const ChatPanel = ({ gameId, currentPhase, isAlive }: ChatPanelProps) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState<string>('');
   const [lastMessageId, setLastMessageId] = useState<number | null>(null);
+  const [shouldAutoScroll, setShouldAutoScroll] = useState<boolean>(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatMessagesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     loadMessages();
@@ -22,8 +25,10 @@ const ChatPanel = ({ gameId, currentPhase }: ChatPanelProps) => {
   }, [gameId]);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (shouldAutoScroll) {
+      scrollToBottom();
+    }
+  }, [messages, shouldAutoScroll]);
 
   const loadMessages = async (): Promise<void> => {
     if (!gameId) return;
@@ -31,6 +36,12 @@ const ChatPanel = ({ gameId, currentPhase }: ChatPanelProps) => {
     try {
       const response = await gameAPI.getChat(gameId, lastMessageId?.toString());
       if (response.data.length > 0) {
+        const chatContainer = chatMessagesRef.current;
+        const isAtBottom = chatContainer
+          ? chatContainer.scrollHeight - chatContainer.scrollTop - chatContainer.clientHeight < 50
+          : true;
+
+        setShouldAutoScroll(isAtBottom);
         setMessages(prev => [...prev, ...response.data]);
         setLastMessageId(response.data[response.data.length - 1].id);
       }
@@ -46,6 +57,7 @@ const ChatPanel = ({ gameId, currentPhase }: ChatPanelProps) => {
     try {
       await gameAPI.sendChat(gameId, inputMessage);
       setInputMessage('');
+      setShouldAutoScroll(true);
       await loadMessages();
     } catch (error) {
       console.error('Fehler beim Senden der Nachricht', error);
@@ -56,8 +68,8 @@ const ChatPanel = ({ gameId, currentPhase }: ChatPanelProps) => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const canChat = currentPhase === 'DAY_DISCUSSION' || currentPhase === 'DAY_VOTING' ||
-                  (currentPhase && currentPhase.startsWith('NIGHT'));
+  const canChat = isAlive && (currentPhase === 'DAY_DISCUSSION' || currentPhase === 'DAY_VOTING' ||
+                  (currentPhase && currentPhase.startsWith('NIGHT')));
 
   return (
     <div className="chat-panel">
@@ -70,7 +82,17 @@ const ChatPanel = ({ gameId, currentPhase }: ChatPanelProps) => {
             </div>
           </div>
 
-          <div className="chat-messages">
+          <div
+            className="chat-messages"
+            ref={chatMessagesRef}
+            onScroll={() => {
+              const chatContainer = chatMessagesRef.current;
+              if (chatContainer) {
+                const isAtBottom = chatContainer.scrollHeight - chatContainer.scrollTop - chatContainer.clientHeight < 50;
+                setShouldAutoScroll(isAtBottom);
+              }
+            }}
+          >
             {messages.length === 0 ? (
               <div className="chat-empty">
                 <div className="chat-empty-icon">💭</div>
